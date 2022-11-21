@@ -5,15 +5,16 @@ using System.Text.RegularExpressions;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using SF.Core.Utilities.IoC;
+using SF.Core.CrossCuttingConcerns.Caching.Microsoft;
 
 namespace SF.Core.CrossCuttingConcerns.Caching.Microsoft
 {
-    public class MemoryCacheManager:ICacheManager
+    public class MemoryCacheManager : ICacheManager
     {
         private IMemoryCache _cache;
         public MemoryCacheManager()
         {
-           _cache =  ServiceTool.ServiceProvider.GetService<IMemoryCache>();
+            _cache = ServiceTool.ServiceProvider.GetService<IMemoryCache>();
         }
         public T Get<T>(string key)
         {
@@ -64,17 +65,10 @@ namespace SF.Core.CrossCuttingConcerns.Caching.Microsoft
 
         public List<string> GetList()
         {
-            var cacheEntriesCollectionDefinition = typeof(MemoryCache).GetProperty("EntriesCollection", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            var cacheEntriesCollection = cacheEntriesCollectionDefinition.GetValue(_cache) as dynamic;
-            List<ICacheEntry> cacheCollectionValues = new List<ICacheEntry>();
 
-            foreach (var cacheItem in cacheEntriesCollection)
-            {
-                ICacheEntry cacheItemValue = cacheItem.GetType().GetProperty("Value").GetValue(cacheItem, null);
-                cacheCollectionValues.Add(cacheItemValue);
-            }
 
-            return cacheCollectionValues.Select(t=>t.Key.ToString()).ToList();
+            return _cache.GetKeys<string>().ToList();
+
 
 
         }
