@@ -99,18 +99,12 @@ namespace SF.Core.Utilities.ExtensionMethods
         /// <returns></returns>
         public static string ToMd5Hash(this string input)
         {
-            // step 1, calculate MD5 hash from input
-            var md5 = MD5.Create();
-            var inputBytes = Encoding.ASCII.GetBytes(input);
-            var hash = md5.ComputeHash(inputBytes);
-
-            // step 2, convert byte array to hex string
-            var sb = new StringBuilder();
-            foreach (var t in hash)
+            using (var md5 = MD5.Create())
             {
-                sb.Append(t.ToString("X2"));
+                var inputBytes = Encoding.ASCII.GetBytes(input);
+                return Convert.ToHexString(md5.ComputeHash(inputBytes));
+         
             }
-            return sb.ToString();
         }
 
  

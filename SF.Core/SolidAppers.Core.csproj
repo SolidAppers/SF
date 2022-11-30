@@ -16,6 +16,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="README.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="README.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
 	  <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
 	  <PackageReference Include="Autofac.Extras.DynamicProxy" Version="6.0.1" />
 	  <PackageReference Include="FluentValidation" Version="11.3.0" />
