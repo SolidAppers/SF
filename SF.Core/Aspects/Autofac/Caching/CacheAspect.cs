@@ -24,10 +24,20 @@ namespace SF.Core.Aspects.Autofac.Caching
 
         }
 
+        public CacheAspect(string key,int duration = 60)
+        {
+            _key = key;
+            _duration = duration;
+            _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
+
+        }
         public override void Intercept(IInvocation invocation)
         {
+            if (string.IsNullOrEmpty(_key))
+            {
+                _key = $"{invocation.Method.ReflectedType.FullName}.{invocation.Method.Name}_{invocation.Arguments.ToJson().ToMd5Hash()}";
 
-            _key = $"{invocation.Method.ReflectedType.FullName}.{invocation.Method.Name}_{invocation.Arguments.ToJson().ToMd5Hash()}";
+            }
 
             if (_cacheManager.IsAdd(_key))
             {
