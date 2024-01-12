@@ -26,6 +26,8 @@ namespace SF.Core.DataAccess.EntityFramework
 
         protected TContext Context { get; }
 
+
+
         public TEntity Add(TEntity entity)
         {
             return Context.Add(entity).Entity;
