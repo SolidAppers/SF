@@ -12,7 +12,7 @@
     <PackageProjectUrl>https://solidappers.net</PackageProjectUrl>
     <RepositoryUrl>https://github.com/SolidAppers</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>8.0.3</Version>
+    <Version>8.0.4</Version>
 	  <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 

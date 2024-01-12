@@ -30,18 +30,22 @@ namespace SF.Core.DataAccess.EntityFramework
 
         public TEntity Add(TEntity entity)
         {
-            return Context.Add(entity).Entity;
+            var added = Context.Add(entity).Entity;
+            Context.SaveChanges();
+            return added;
         }
 
         public TEntity Update(TEntity entity)
         {
             Context.Update(entity);
+            Context.SaveChanges();
             return entity;
         }
 
         public void Delete(TEntity entity)
         {
             Context.Remove(entity);
+            Context.SaveChanges();
         }
 
         public TEntity Get(Expression<Func<TEntity, bool>> expression)
@@ -68,10 +72,10 @@ namespace SF.Core.DataAccess.EntityFramework
                 : await Context.Set<TEntity>().Where(expression).ToListAsync();
         }
 
-   
 
 
-  
+
+
 
         public int SaveChanges()
         {
