@@ -26,7 +26,7 @@ namespace SF.Core.CrossCuttingConcerns
 					Name = Environment.MachineName,
 					UserId = -1,
 					UserIp = Environment.MachineName,
-
+					UserData = new Entities.Concrete.YetkiKullanici()
 				};
 
 			}

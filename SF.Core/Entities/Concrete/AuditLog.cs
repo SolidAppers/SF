@@ -30,6 +30,10 @@ namespace SF.Core.Entities.Concrete
         public string Ip { get; set; }
 
 
+        [DisplayName("Vekil")]
+        public int? VekilId { get; set; }
+
+
         public virtual ICollection<AuditLogDetail> AuditLogDetail { get; set; }
     }
 

@@ -12,12 +12,16 @@ using SF.Core.CrossCuttingConcerns;
 
 namespace SF.Core.DataAccess.EntityFramework
 {
-    public class DbContextBase : DbContext
+    public class DbContextBaseInjectable : DbContext
     {
 
 
 
-     
+        public DbContextBaseInjectable(DbContextOptions<DbContextBaseInjectable> options)
+    : base(options)
+        {
+        }
+
 
 
         public DbSet<AuditLog> AuditLog { get; set; }
@@ -25,7 +29,8 @@ namespace SF.Core.DataAccess.EntityFramework
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-                modelBuilder.ApplyConfiguration(new AuditLogDetailMap());
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new AuditLogDetailMap());
         }
 
 
@@ -150,7 +155,6 @@ namespace SF.Core.DataAccess.EntityFramework
                 EklemeTarihi = DateTime.Now,
                 KullaniciId = CurrentUser.Id,
                 Ip = CurrentUser.Ip,
-               VekilId = CurrentUser.Identity.UserData.VekilId,
                 AuditLogDetail = GenerateChangeLogDetails(entity)
             };
 

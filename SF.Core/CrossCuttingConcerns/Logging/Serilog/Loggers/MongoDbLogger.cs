@@ -17,8 +17,7 @@ namespace SF.Core.CrossCuttingConcerns.Logging.Serilog.Loggers
                             throw new Exception("SeriLogConfigurations:MongoDbConfiguration section is missing!");
                 
         
-            Logger = new LoggerConfiguration()
-                .WriteTo.MongoDB(logConfig.ConnectionString, collectionName: logConfig.Collection)
+            Logger = new LoggerConfiguration().WriteTo.MongoDB(logConfig.ConnectionString, collectionName: logConfig.Collection)
                 .CreateLogger();
         }
     }
