@@ -5,8 +5,7 @@ using System.Text.RegularExpressions;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using SF.Core.Utilities.IoC;
-using SF.Core.CrossCuttingConcerns.Caching.Microsoft;
-using Amazon.Runtime.Internal.Util;
+
 
 namespace SF.Core.CrossCuttingConcerns.Caching.Microsoft
 {
