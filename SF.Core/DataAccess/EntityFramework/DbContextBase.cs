@@ -17,7 +17,7 @@ namespace SF.Core.DataAccess.EntityFramework
 
 
 
-     
+
 
 
         public DbSet<AuditLog> AuditLog { get; set; }
@@ -25,7 +25,7 @@ namespace SF.Core.DataAccess.EntityFramework
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-                modelBuilder.ApplyConfiguration(new AuditLogDetailMap());
+            modelBuilder.ApplyConfiguration(new AuditLogDetailMap());
         }
 
 
@@ -150,7 +150,7 @@ namespace SF.Core.DataAccess.EntityFramework
                 EklemeTarihi = DateTime.Now,
                 KullaniciId = CurrentUser.Id,
                 Ip = CurrentUser.Ip,
-               VekilId = CurrentUser.Identity.UserData.VekilId,
+                VekilId = CurrentUser.Identity.UserData?.VekilId,
                 AuditLogDetail = GenerateChangeLogDetails(entity)
             };
 
