@@ -9,6 +9,7 @@ using SF.Core.Utilities.Comparators;
 using SF.Core.Utilities.ExtensionMethods;
 using System.Linq;
 using SF.Core.CrossCuttingConcerns;
+using SharpCompress.Common;
 
 namespace SF.Core.DataAccess.EntityFramework
 {
@@ -229,10 +230,15 @@ namespace SF.Core.DataAccess.EntityFramework
 
 
             var values = entity.State == EntityState.Deleted ? entity.OriginalValues : entity.CurrentValues;
+            PropertyValues dbValues = null;
+            if ((entity.State == EntityState.Modified || entity.State == EntityState.Deleted))
+            {
+                dbValues = entity.GetDatabaseValues();
+            }
 
             foreach (var propName in values.Properties)
             {
-                var detail = GenerateChangeLogDetail(entity, propName.Name);
+                var detail = GenerateChangeLogDetail(entity, propName.Name, dbValues);
 
                 if (detail != null)
                 {
@@ -243,18 +249,14 @@ namespace SF.Core.DataAccess.EntityFramework
             return details;
         }
 
-        private static AuditLogDetail GenerateChangeLogDetail(EntityEntry entity, string propName)
+        private static AuditLogDetail GenerateChangeLogDetail(EntityEntry entity, string propName, PropertyValues dbValues)
         {
 
 
             object eskiVeri = null;
-            //var current = entry.CurrentValues[property.Name]
-            if (entity.State == EntityState.Modified || entity.State == EntityState.Deleted)
+            if (dbValues != null) // modify
             {
-
-
-                eskiVeri = entity.GetDatabaseValues().GetValue<object>(propName);
-                //  eskiVeri = entity.OriginalValues.GetValue<object>(propName);
+                eskiVeri = dbValues.GetValue<object>(propName);
             }
 
             object yeniVeri;
